@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mini Blog Site Builder</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, textarea { width: 100%; padding: 8px; margin: 10px 0; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>📝 Create Your Blog</h2>
+  
+  <input id="siteName" placeholder="Enter blog name (e.g. myblog)" />
+  <input type="file" id="imageUpload" accept="image/*" /><br>
+  
+  <textarea id="blogText" placeholder="Write your blog content here. Use *bold*, [text](link), etc."></textarea>
+  
+  <button onclick="publish()">🚀 Publish</button>
+  
+  <p id="link"></p>
+
+  <script>
+    async function publish() {
+      const name = document.getElementById("siteName").value.trim();
+      const blogText = document.getElementById("blogText").value;
+      const imageFile = document.getElementById("imageUpload").files[0];
+
+      if (!name || !blogText) {
+        alert("Site name and content required.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("text", blogText);
+      if (imageFile) formData.append("image", imageFile);
+
+      const response = await fetch("/publish", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      document.getElementById("link").innerHTML = `✅ Your blog is live: <a href="${data.url}" target="_blank">${data.url}</a>`;
+    }
+  </script>
+</body>
+</html>
