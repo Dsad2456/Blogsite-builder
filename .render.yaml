@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: blogsite-builder
+    name: freesite-clone
     env: node
-    plan: free
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node server.js
+    plan: free
