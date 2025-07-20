@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: blogsite-builder
+    name: blogsite
     env: node
     buildCommand: npm install
-    startCommand: node server.js
-    rootDir: .
+    startCommand: npm start
+    plan: free
